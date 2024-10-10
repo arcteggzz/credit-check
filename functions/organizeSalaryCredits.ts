@@ -14,7 +14,7 @@ export const organizeSalaryCredits = (list: IFrequencyTable) => {
         },
         {
           keyword: "salary",
-          count: 8,
+          count: 2,
           transationIds: ["12", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
         },
       ],

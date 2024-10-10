@@ -46,7 +46,7 @@ const baseMain = () => {
   //step 8
   //CHECK IF THEY HAVE A SIMILAR SENDER
 
-  //step 8
+  //step 9
   //CHECK IF THEY OCCURED ON THE SAME PERIOD EVERY MONTH
   //do most of them occur arounf the same time period?
 
