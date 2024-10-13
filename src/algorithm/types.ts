@@ -32,34 +32,49 @@ export type ITransaction = {
   type: "credit" | "debit";
   amount: number;
   narration: string; //drescription
-  range: IAmountRange;
+  range?: IAmountRange;
+  to?: string;
+  from?: string;
 };
 
 //single account type
 export type IAccountDetails = {
-  //owner details
   owner: IAccountOwner;
-
   accountType: IAccount;
   totalCreditCount: number;
   totalDebitCount: number;
-
-  //transactions list
-  transactions: ITransaction[];
   creditTransactions: ITransaction[];
   debitTransactions: ITransaction[];
 };
 
-export type IFrequencyTable = {
+export type GroupedCreditTransaction = {
   id: number | string;
   amount: string | number;
   count: number;
   transactionIds: string[];
-}[];
+};
 
 export type IFrequencyDescriptionTable = {
   name: string;
   keyword: string;
+  count: number;
+  transactionIds: string[];
+}[];
+
+export type IDescriptionFrequencyTable = {
+  keyword: string;
+  count: number;
+  transactionIds: string[];
+}[];
+
+export type ISenderFrequencyTable = {
+  employer: string;
+  count: number;
+  transactionIds: string[];
+}[];
+
+export type IDateFrequencyTable = {
+  datePeriod: string;
   count: number;
   transactionIds: string[];
 }[];

@@ -1,6 +1,6 @@
 import { IAccountDetails } from "../types";
-import { sampleAccountDetails } from "../data";
+import { sampleTestAccountDetails } from "../data";
 
 export const getSterilizedData = (): IAccountDetails => {
-  return sampleAccountDetails;
+  return sampleTestAccountDetails;
 };
