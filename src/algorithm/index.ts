@@ -2,11 +2,14 @@ import { getSterilizedData } from "./functions/getSterilizedData";
 import { groupCreditTransactionsByAmount } from "./functions/groupCreditTransactionsByAmount";
 import { getHighFrequencyCreditTransactionsList } from "./functions/getHighFrequencyCreditTransactionsList";
 import { getDescriptionFrequencies } from "./functions/getDescriptionFrequencies";
+import { getDatePeriodAnalysis } from "./functions/getDatePeriodAnalysis";
+import { getSalaryDescriptionAnalysisScore } from "./functions/getSalaryDescriptionAnalysisScore";
+import { getSenderSimilarityAnalysisScore } from "./functions/getSenderSimilarityAnalysisScore";
 import {
   IAccountDetails,
   ITransaction,
   GroupedCreditTransaction,
-  IDescriptionFrequencyTable,
+  IDescriptionFrequency,
   // ISenderFrequencyTable,
   // IDateFrequencyTable,
 } from "./types";
@@ -50,41 +53,53 @@ export const creditAlgorithm = () => {
 
   //step 7
   //FOR EACH OF THE ITEMS THAT QUALIFY FOR THE LIMIT CHECK, RUN A "TEGA ALGORITHM" on each.
+  highFrequencyCreditTransactions.map((highOccurrence) => {
+    //SUB-STEP 7-A1
+    // get the number of transactions that have similar descriptions based on keywords
+    // returns the keyword and the number of transactons that had that key word.
+    const descriptionFrequencies: IDescriptionFrequency =
+      getDescriptionFrequencies(highOccurrence);
 
-  //SUB-STEP 7-A1
-  // get the number of transactions that have similar descriptions based on keywords
-  // returns the keyword and the number of transactons that had that key word.
-  const descriptionFrequencies: IDescriptionFrequencyTable =
-    getDescriptionFrequencies(highFrequencyCreditTransactions);
+    //SUB-STEP 7-A2
+    //get the frequency analysis score
+    const salaryDescriptionAnalysisScore: number =
+      getSalaryDescriptionAnalysisScore(
+        descriptionFrequencies.numberOfSelected,
+        config.statementPeriod
+      );
 
-  console.log(descriptionFrequencies);
+    //////////
 
-  //SUB-STEP 7-A2
-  //get the count of the highest occuring frequency
-  // const numberOfTransactionsWithSimilarDescription =
-  //   descriptionFrequencies[0].count;
+    // SUB-STEP 7-B1
+    // CHECK IF THEY OCCURED IN THE SAME PERIOD OF EVERY MONTH
+    // do most of them occur arounD the same time period?
+    //get the sore for this particular one.
+    const dateAnalysisScore: number | null =
+      getDatePeriodAnalysis(highOccurrence);
 
-  //SUB-STEP 7-B1
-  //CHECK IF THEY HAVE A SIMILAR SENDER
-  //use metadata from mono for this.
-  // const sameSenderFrequencies: ISenderFrequencyTable = getSenderFrequencies(
-  //   highFrequencyCreditTransactions
-  // );
+    if (!dateAnalysisScore) return "found illogical date";
 
-  //SUB-STEP 7-B2
-  //CHECK IF THE highest occuring sender for this money is a company name using AI
-  // const numberOfTransactionsWithSameSender = sameSenderFrequencies[0].count;
+    //SUB-STEP 7-C1
+    //CHECK IF THEY HAVE A SIMILAR SENDER
+    //use metadata from mono for this.
+    const senderSimilarityAnalysisScore: number =
+      getSenderSimilarityAnalysisScore(highOccurrence);
 
-  //SUB-STEP 7-C1
-  //CHECK IF THEY OCCURED IN THE SAME PERIOD OF EVERY MONTH
-  //do most of them occur arounf the same time period?
-  // const sameDateFrequencies: IDateFrequencyTable = getDatePeriodFrequencies(
-  //   highFrequencyCreditTransactions
-  // );
+    //STEP 8
+    //calculate your confidence level for this particular high frequency transactions.
+    const confidence =
+      config.weights.salaryDescriptionWeight * salaryDescriptionAnalysisScore +
+      config.weights.salaryDateWeight * dateAnalysisScore +
+      config.weights.senderSimilarityWeight * senderSimilarityAnalysisScore;
 
-  //SUB-STEP 7-C2
-  //CHECK IF THE highest occuring sender for this money is a company name using AI
-  // const numberOfTransactionsWithSameDatePeriod = sameDateFrequencies[0].count;
+    const proposedSolution = {
+      confidence,
+      salaryAmount: highOccurrence.amount,
+      //number of times this salary amount occured
+      salaryFrequency: highOccurrence.count,
+      statemenPeriod: config.statementPeriod,
+    };
 
-  //SUB-STEP 7-D1
+    console.log(proposedSolution);
+  });
 };

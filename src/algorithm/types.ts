@@ -51,7 +51,11 @@ export type GroupedCreditTransaction = {
   id: number | string;
   amount: string | number;
   count: number;
-  transactionIds: string[];
+  transactionDetails: {
+    id: string | number;
+    narration: string;
+    date: string;
+  }[];
 };
 
 export type IFrequencyDescriptionTable = {
@@ -61,11 +65,13 @@ export type IFrequencyDescriptionTable = {
   transactionIds: string[];
 }[];
 
-export type IDescriptionFrequencyTable = {
-  keyword: string;
-  count: number;
-  transactionIds: string[];
-}[];
+export type IDescriptionFrequency = {
+  keywords: string[] | null;
+  numberOfSelected: number;
+  numberOfUnselected: number;
+  pickedTransactionIds: string[] | null;
+  unselectedTransactionIds: string[] | null;
+};
 
 export type ISenderFrequencyTable = {
   employer: string;
@@ -78,3 +84,23 @@ export type IDateFrequencyTable = {
   count: number;
   transactionIds: string[];
 }[];
+
+export type IDateFrequency = {
+  dateRange: {
+    intervalStart: string;
+    intervalEnd: string;
+  };
+  numberOfSelected: number;
+  numberOfUnselected: number;
+  pickedTransactionIds:
+    | { transactionDate: string; transactionId: string | number }[]
+    | null;
+  unselectedTransactionIds:
+    | { transactionDate: string; transactionId: string | number }[]
+    | null;
+};
+
+export type IDateDeviation = {
+  range: number;
+  standardDeviation: number;
+};

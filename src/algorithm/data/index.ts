@@ -1,8 +1,8 @@
 import {
   IAccountDetails,
   IAccount,
-  GroupedCreditTransaction,
-  IDescriptionFrequencyTable,
+  // GroupedCreditTransaction,
+  // IDescriptionFrequencyTable,
 } from "../types";
 
 export const sampleTestAccountDetails: IAccountDetails = {
@@ -357,39 +357,39 @@ export const sampleTestAccountDetails: IAccountDetails = {
   ],
 };
 
-export const frequencyTest: GroupedCreditTransaction[] = [
-  {
-    id: 1,
-    amount: "2000",
-    count: 12,
-    transactionIds: [
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "10",
-      "11",
-      "12",
-      "13",
-      "14",
-      "15",
-      "16",
-    ],
-  },
-  {
-    id: 2,
-    amount: "1000",
-    count: 4,
-    transactionIds: ["1", "2", "3", "4"],
-  },
-  {
-    id: 3,
-    amount: "5000",
-    count: 1,
-    transactionIds: ["17"],
-  },
-];
+// export const frequencyTest: GroupedCreditTransaction[] = [
+//   {
+//     id: 1,
+//     amount: "2000",
+//     count: 12,
+//     transactionIds: [
+//       "5",
+//       "6",
+//       "7",
+//       "8",
+//       "9",
+//       "10",
+//       "11",
+//       "12",
+//       "13",
+//       "14",
+//       "15",
+//       "16",
+//     ],
+//   },
+//   {
+//     id: 2,
+//     amount: "1000",
+//     count: 4,
+//     transactionIds: ["1", "2", "3", "4"],
+//   },
+//   {
+//     id: 3,
+//     amount: "5000",
+//     count: 1,
+//     transactionIds: ["17"],
+//   },
+// ];
 
 //these 2 passed the limit check.
 export const stuff = [
@@ -420,15 +420,15 @@ export const stuff = [
   },
 ];
 
-export const descriptionFrequencies: IDescriptionFrequencyTable = [
-  {
-    count: 8,
-    keyword: "salary",
-    transactionIds: ["1", "2", "3", "4", "5", "6", "7", "8"],
-  },
-  {
-    count: 2,
-    keyword: "Emeka",
-    transactionIds: ["1", "2"],
-  },
-];
+// export const descriptionFrequencies: IDescriptionFrequencyTable = [
+//   {
+//     count: 8,
+//     keyword: "salary",
+//     transactionIds: ["1", "2", "3", "4", "5", "6", "7", "8"],
+//   },
+//   {
+//     count: 2,
+//     keyword: "Emeka",
+//     transactionIds: ["1", "2"],
+//   },
+// ];

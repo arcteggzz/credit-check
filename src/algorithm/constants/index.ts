@@ -8,19 +8,78 @@ export const periodConfig = [
     leastExpectedOccurrence: 6, //6 occurrences
   },
   {
-    period: 6, //8 months
-    leastExpectedOccurrence: 4, //6 occurrences
+    period: 6, //6 months
+    leastExpectedOccurrence: 4, //4 occurrences
   },
   {
-    period: 3, //8 months
-    leastExpectedOccurrence: 3, //6 occurrences
+    period: 3, //3 months
+    leastExpectedOccurrence: 3, //3 occurrences
   },
 ];
 
-export const keywordsList = ["salary", "net payment", "reimbursement"];
+const salaryKeywords = [
+  "salary",
+  "payment",
+  "net payment",
+  "wages",
+  "monthly income",
+  "earnings",
+  "allowance",
+  "stipend",
+  "compensation",
+  "remuneration",
+  "take-home",
+  "net salary",
+  "gross salary",
+  "basic salary",
+  "paycheck",
+  "bank credit",
+  "monthly credit",
+  "pension",
+  "commission",
+  "bonus",
+  "overdraft refund",
+  "gratification",
+  "service allowance",
+  "hazard allowance",
+  "transport allowance",
+  "housing allowance",
+  "medical allowance",
+  "13th month salary",
+  "arrears",
+  "reimbursement",
+  "salary advance",
+  "loan repayment",
+  "contract payment",
+  "consultancy fees",
+  "incentive",
+  "overtime pay",
+  "union dues deduction",
+  "payroll credit",
+  "net credit",
+  "employment benefit",
+  "gratuity",
+  "settlement",
+  "deferred payment",
+  "professional fees",
+  "subsistence allowance",
+  "utility allowance",
+  "final settlement",
+  "bursary",
+  "scholarship stipend",
+  "ex-gratia",
+];
+
+const salaryWeightCalculation = {
+  salaryDescriptionWeight: 0.45, //45%
+  salaryDateWeight: 0.4, //40%
+  senderSimilarityWeight: 0.1, //10%
+};
 
 export const config = {
   statementPeriod: 6,
   leastExpectedOccurence: 4,
-  keyWords: keywordsList,
+  dateSpreadLimit: 7,
+  keyWords: salaryKeywords,
+  weights: salaryWeightCalculation,
 };
