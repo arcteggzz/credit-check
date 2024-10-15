@@ -6,7 +6,7 @@ export const groupCreditTransactionsByAmount = (
   const groupedTransactions: { [key: number]: GroupedCreditTransaction } = {};
 
   transactions.forEach((transaction) => {
-    const { id, amount } = transaction;
+    const { id, amount, narration, date } = transaction;
 
     // Check if this amount already exists in the group
     if (!groupedTransactions[amount]) {
@@ -14,13 +14,17 @@ export const groupCreditTransactionsByAmount = (
         id: Object.keys(groupedTransactions).length + 1, // Incremental ID
         amount: amount,
         count: 0,
-        transactionIds: [],
+        transactionDetails: [],
       };
     }
 
     // Update the group for this amount
     groupedTransactions[amount].count += 1;
-    groupedTransactions[amount].transactionIds.push(id as string);
+    groupedTransactions[amount].transactionDetails.push({
+      id: id as string,
+      date: date,
+      narration: narration,
+    });
   });
 
   // Convert the object to an array
